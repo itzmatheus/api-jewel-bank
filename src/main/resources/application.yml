@@ -31,3 +31,6 @@ logging:
 swagger:
   server-url: /
 
+
+springdoc:
+  show-login-endpoint: true
