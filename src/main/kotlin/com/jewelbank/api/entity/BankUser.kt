@@ -10,7 +10,7 @@ import java.io.Serializable
 import java.util.*
 
 @Entity
-data class User(
+data class BankUser(
 
     @Id @NotNull
     val id: String = UUID.randomUUID().toString(),
@@ -20,7 +20,7 @@ data class User(
     val email: String = "",
 
     @Column(nullable = false)
-    val password: String = "",
+    var password: String = "",
 
     @Column(nullable = false)
     val name: String = "",

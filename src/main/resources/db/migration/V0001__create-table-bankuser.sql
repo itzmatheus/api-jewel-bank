@@ -1,4 +1,4 @@
-CREATE TABLE "user" (
+CREATE TABLE bank_user (
    id           VARCHAR(255)                    NOT NULL,
    created_at   TIMESTAMP WITHOUT TIME ZONE,
    updated_at   TIMESTAMP WITHOUT TIME ZONE,
@@ -9,8 +9,8 @@ CREATE TABLE "user" (
    avatar_url   VARCHAR(255),
    cpf          VARCHAR(14)                     NOT NULL,
 
-   CONSTRAINT pk_user PRIMARY KEY (id)
+   CONSTRAINT pk_bank_user PRIMARY KEY (id)
 );
 
-ALTER TABLE "user" ADD CONSTRAINT uc_user_cpf   UNIQUE (cpf);
-ALTER TABLE "user" ADD CONSTRAINT uc_user_email UNIQUE (email);
+ALTER TABLE bank_user ADD CONSTRAINT uc_user_cpf   UNIQUE (cpf);
+ALTER TABLE bank_user ADD CONSTRAINT uc_user_email UNIQUE (email);
