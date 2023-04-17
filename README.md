@@ -7,7 +7,8 @@ The purpose of this project is just studying all techs involving.
 
 **Server:**
 - Language Java 17 and Kotlin 1.7.22
-- Framework Spring (Springboot, Spring Data, Spring Web, DevTools), Flyway, H2, Swagger
+- Framework Spring (Springboot, Spring Data, Spring Web, Spring Security DevTools), Flyway, H2, Swagger
+- JWT to Authorization
 
 **DevOps:**
 - Google as cloud provider
@@ -80,3 +81,4 @@ To deploy this project run
 - [Microservices com Kotlin, Spring boot e Kubernetes rodando na Google Cloud](https://medium.com/rapaduratech/microservices-com-kotlin-spring-boot-e-kubernetes-rodando-na-google-cloud-63056044d8a9)
 - [Google Cloud](https://cloud.google.com/?hl=pt-br)
 - [Kubernetes](https://kubernetes.io/pt-br/)
+- [Implementing Authentication And Authorization using Spring Security, Kotlin and JWT | An easy and straightforward way](https://blog.devgenius.io/implementing-authentication-and-authorization-using-spring-security-kotlin-and-jwt-an-easy-and-cc82a1f20567)

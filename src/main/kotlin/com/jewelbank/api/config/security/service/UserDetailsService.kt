@@ -1,21 +1,21 @@
-package com.jewelbank.api.service
+package com.jewelbank.api.config.security.service
 
 import com.jewelbank.api.config.security.UserSecurity
 import com.jewelbank.api.config.security.enumeration.UserRoles
-import com.jewelbank.api.repository.UserRepository
+import com.jewelbank.api.repository.BankUserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
-import java.util.Collections
+import java.util.*
 
 @Service
 class UserDetailsService(
-    private val userRepository: UserRepository,
+    private val bankUserRepository: BankUserRepository,
 ) : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findByEmail(username) ?: throw UsernameNotFoundException("$username not found")
+        val user = bankUserRepository.findByEmail(username)?: throw UsernameNotFoundException("$username not found")
         return UserSecurity(
             id = user.id,
             email = user.email,
