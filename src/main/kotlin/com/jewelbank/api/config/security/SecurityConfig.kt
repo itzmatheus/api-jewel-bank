@@ -3,7 +3,7 @@ package com.jewelbank.api.config.security
 import com.jewelbank.api.config.security.jwt.JwtAuthenticationFilter
 import com.jewelbank.api.config.security.jwt.JwtAuthorizationFilter
 import com.jewelbank.api.config.security.jwt.JwtTokenUtil
-import com.jewelbank.api.config.security.service.UserDetailsService
+import com.jewelbank.api.config.security.service.UserDetailsServiceImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -15,14 +15,14 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 class SecurityConfig(
-    private val userDetailsService: UserDetailsService,
+    private val userDetailsServiceImpl: UserDetailsServiceImpl,
 ) {
     private val jwtToken = JwtTokenUtil()
     private fun authManager(http: HttpSecurity): AuthenticationManager {
         val authenticationManagerBuilder = http.getSharedObject(
             AuthenticationManagerBuilder::class.java
         )
-        authenticationManagerBuilder.userDetailsService(userDetailsService)
+        authenticationManagerBuilder.userDetailsService(userDetailsServiceImpl)
         return authenticationManagerBuilder.build()
     }
 
@@ -39,7 +39,7 @@ class SecurityConfig(
             .authenticationManager(authenticationManager)
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().addFilter(JwtAuthenticationFilter(jwtToken, authenticationManager))
-            .addFilter(JwtAuthorizationFilter(jwtToken, userDetailsService, authenticationManager))
+            .addFilter(JwtAuthorizationFilter(jwtToken, userDetailsServiceImpl, authenticationManager))
         return http.build()
     }
 

@@ -1,6 +1,6 @@
 package com.jewelbank.api.config.security.jwt
 
-import com.jewelbank.api.config.security.service.UserDetailsService
+import com.jewelbank.api.config.security.service.UserDetailsServiceImpl
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
@@ -13,7 +13,7 @@ import java.io.IOException
 
 class JwtAuthorizationFilter(
     private val jwtTokenUtil: JwtTokenUtil,
-    private val userDetailsService: UserDetailsService,
+    private val userDetailsServiceImpl: UserDetailsServiceImpl,
     private val authManager: AuthenticationManager,
 ) : BasicAuthenticationFilter(authManager) {
 
@@ -33,7 +33,7 @@ class JwtAuthorizationFilter(
     private fun getAuthentication(token: String): UsernamePasswordAuthenticationToken? {
         if (!jwtTokenUtil.isTokenValid(token)) return null
         val email = jwtTokenUtil.getEmail(token)
-        val user = userDetailsService.loadUserByUsername(email)
+        val user = userDetailsServiceImpl.loadUserByUsername(email)
         return UsernamePasswordAuthenticationToken(user, null, user.authorities)
     }
 }
