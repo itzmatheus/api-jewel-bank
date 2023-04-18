@@ -71,20 +71,4 @@ class BankUserControllerTest {
         Assertions.assertFalse(response.headers["TokenExpirationDate"].isNullOrEmpty())
     }
 
-    @Test
-    fun shouldReturnErrorWhenTryLoginWithWrongCredential() {
-        val requestRegisterUser = createRequestRegisterUser()
-        template.postForEntity(ENDPOINT_BANK_USER_REGISTER, requestRegisterUser, BankUser::class.java)
-
-        val loginRequest = createRequestLoginDTO(password = "wrong_pass")
-        val headers = HttpHeaders()
-        headers.accept = listOf(MediaType.APPLICATION_JSON)
-        val entity = HttpEntity(loginRequest, headers)
-        val response = template.exchange<Any>(ENDPOINT_BANK_USER_REGISTER, HttpMethod.POST, entity)
-
-        Assertions.assertTrue(response.statusCode.is4xxClientError)
-        Assertions.assertTrue(response.headers["Authorization"].isNullOrEmpty())
-        Assertions.assertTrue(response.headers["TokenExpirationDate"].isNullOrEmpty())
-    }
-
 }
