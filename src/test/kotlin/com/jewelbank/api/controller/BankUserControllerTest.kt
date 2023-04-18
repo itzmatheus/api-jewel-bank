@@ -3,6 +3,8 @@ package com.jewelbank.api.controller
 import com.jewelbank.api.entity.BankUser
 import com.jewelbank.api.repository.BankUserRepository
 import com.jewelbank.api.utils.ENDPOINT_BANK_USER_REGISTER
+import com.jewelbank.api.utils.ENDPOINT_LOGIN
+import com.jewelbank.api.utils.createRequestLoginDTO
 import com.jewelbank.api.utils.createRequestRegisterUser
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -54,6 +56,19 @@ class BankUserControllerTest {
         val response = template.exchange<Any>(ENDPOINT_BANK_USER_REGISTER, HttpMethod.POST, entity)
 
         Assertions.assertTrue(response.statusCode.is4xxClientError)
+    }
+
+    @Test
+    fun shouldLoginSuccessfully() {
+        val requestRegisterUser = createRequestRegisterUser()
+        template.postForEntity(ENDPOINT_BANK_USER_REGISTER, requestRegisterUser, BankUser::class.java)
+
+        val loginRequest = createRequestLoginDTO()
+        val response = template.postForEntity(ENDPOINT_LOGIN, loginRequest, String::class.java)
+
+        Assertions.assertTrue(response.statusCode.is2xxSuccessful)
+        Assertions.assertFalse(response.headers["Authorization"].isNullOrEmpty())
+        Assertions.assertFalse(response.headers["TokenExpirationDate"].isNullOrEmpty())
     }
 
 }
