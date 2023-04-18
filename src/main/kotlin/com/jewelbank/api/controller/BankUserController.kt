@@ -6,6 +6,7 @@ import com.jewelbank.api.service.BankUserService
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -21,18 +22,11 @@ class BankUserController(
 
     @PostMapping("/register")
     @ApiResponse(description = "Successfully Operation", responseCode = "201", content = [Content(mediaType = "application/json", schema = Schema(implementation = BankUser::class))])
-    fun register(@RequestBody bankUserRegisterDTO: BankUserRegisterDTO): ResponseEntity<*> {
+    fun register(@Valid @RequestBody bankUserRegisterDTO: BankUserRegisterDTO): ResponseEntity<*> {
         logger.info("Call Endpoint Register BankUser")
-        return try {
-            ResponseEntity
+        return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(bankUserService.register(bankUserRegisterDTO))
-        } catch (exception: Exception) {
-            logger.error("Error to create bank user: ${exception.message}", exception)
-            ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Internal error")
-        }
     }
 
 }

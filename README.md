@@ -11,7 +11,8 @@ The purpose of this project is just studying all techs involving.
 - JWT to Authorization
 
 **DevOps:**
-- Google as cloud provider
+- Google as cloud 
+- provider
 
 
 ## Features
@@ -82,3 +83,4 @@ To deploy this project run
 - [Google Cloud](https://cloud.google.com/?hl=pt-br)
 - [Kubernetes](https://kubernetes.io/pt-br/)
 - [Implementing Authentication And Authorization using Spring Security, Kotlin and JWT | An easy and straightforward way](https://blog.devgenius.io/implementing-authentication-and-authorization-using-spring-security-kotlin-and-jwt-an-easy-and-cc82a1f20567)
+- [Error Handling for REST with Spring in Kotlin](https://www.baeldung.com/kotlin/spring-rest-error-handling)

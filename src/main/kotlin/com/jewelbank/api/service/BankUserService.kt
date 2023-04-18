@@ -17,10 +17,11 @@ class BankUserService(
     private val logger = LoggerFactory.getLogger(BankUserService::class.java)
 
     fun register(bankUserRegisterDTO: BankUserRegisterDTO): BankUser {
+
         logger.info("Creating bank user with email: ${bankUserRegisterDTO.email}")
-        val user = bankUserRegisterDTO.toEntity()
+        var user = bankUserRegisterDTO.toEntity()
         user.password = passwordEncoder.encode(user.password)
-        bankUserRepository.save(user)
+        user = bankUserRepository.save(user)
         logger.info("Bank user successfully created!")
         return user
     }
