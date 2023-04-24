@@ -7,3 +7,9 @@ test: install
 
 run: install
 	java -jar target/kotlin-*.jar
+
+docker-up:
+	docker-compose up -d
+
+docker-down:
+	docker-compose down

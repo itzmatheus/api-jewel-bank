@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  database:
+    container_name: "postgres_api_jewelbank"
+    restart: always
+    image: postgres:14.6
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db_jewelbank
+      TZ: GMT
+      PGDATA: /postgres_data
+    ports:
+      - "5465:5432"
