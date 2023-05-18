@@ -8,19 +8,18 @@ import jakarta.persistence.TemporalType
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.io.Serializable
 import java.util.Date
 
 @MappedSuperclass
 @JsonIgnoreProperties(value = ["createdAt", "updatedAt"])
 @EntityListeners(AuditingEntityListener::class)
-abstract class AuditModel(
-
+abstract class AuditModel: Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    open var createdAt: Date? = null,
+    open var createdAt: Date? = null
 
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     open var updatedAt: Date? = null
-
-)
+}

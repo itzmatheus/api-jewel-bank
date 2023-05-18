@@ -3,6 +3,7 @@ package com.jewelbank.api.service
 import com.jewelbank.api.dto.BankUserRegisterDTO
 import com.jewelbank.api.entity.BankUser
 import com.jewelbank.api.repository.BankUserRepository
+import com.jewelbank.api.service.exceptions.BankUserNotFoundException
 import com.jewelbank.api.utils.extensions.toEntity
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -23,7 +24,16 @@ class BankUserService(
         user.password = passwordEncoder.encode(user.password)
         user = bankUserRepository.save(user)
         logger.info("Bank user successfully created!")
+        // add to queue create account for user #TODO
         return user
+    }
+
+    fun findById(id: String): BankUser {
+        val user = bankUserRepository.findById(id)
+        if (user.isEmpty) {
+            throw BankUserNotFoundException("BankUser not found by id: $id")
+        }
+        return user.get()
     }
 
 }
