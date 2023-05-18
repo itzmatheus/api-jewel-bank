@@ -5,6 +5,7 @@ import com.jewelbank.api.entity.BankUser
 import com.jewelbank.api.repository.AccountRepository
 import com.jewelbank.api.repository.AgencyRepository
 import com.jewelbank.api.repository.BankRepository
+import com.jewelbank.api.repository.BankUserRepository
 import com.jewelbank.api.utils.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -15,7 +16,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
+@ActiveProfiles("test", "nosecurity")
 class AccountControllerTest {
 
     @Autowired
@@ -26,11 +27,13 @@ class AccountControllerTest {
     lateinit var agencyRepository: AgencyRepository
     @Autowired
     lateinit var bankRepository: BankRepository
+    @Autowired
+    lateinit var bankUserRepository: BankUserRepository
 
     @BeforeEach
     fun setUp() {
+        bankUserRepository.deleteAll()
         accountRepository.deleteAll()
-
         agencyRepository.save(createAgencyMock())
         bankRepository.save(createBankMock())
     }
