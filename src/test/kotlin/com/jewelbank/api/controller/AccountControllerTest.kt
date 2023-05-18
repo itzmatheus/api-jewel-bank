@@ -32,8 +32,9 @@ class AccountControllerTest {
 
     @BeforeEach
     fun setUp() {
-        bankUserRepository.deleteAll()
         accountRepository.deleteAll()
+        bankUserRepository.deleteAll()
+
         agencyRepository.save(createAgencyMock())
         bankRepository.save(createBankMock())
     }
