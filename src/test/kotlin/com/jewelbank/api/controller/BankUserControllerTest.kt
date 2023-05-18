@@ -1,13 +1,12 @@
 package com.jewelbank.api.controller
 
 import com.jewelbank.api.entity.BankUser
-import com.jewelbank.api.repository.BankUserRepository
 import com.jewelbank.api.utils.ENDPOINT_BANK_USER_REGISTER
 import com.jewelbank.api.utils.ENDPOINT_LOGIN
 import com.jewelbank.api.utils.createRequestLoginDTO
 import com.jewelbank.api.utils.createRequestRegisterUser
+import io.github.serpro69.kfaker.Faker
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,6 +17,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
+import java.util.*
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -25,18 +25,17 @@ class BankUserControllerTest {
 
     @Autowired
     lateinit var template: TestRestTemplate
-    @Autowired
-    lateinit var bankUserRepository: BankUserRepository
 
-    @BeforeEach
-    fun clearDb() {
-        bankUserRepository.deleteAll()
-    }
+    private val faker = Faker()
 
     @Test
     fun shouldRegisterSuccessfully() {
 
-        val requestRegisterUser = createRequestRegisterUser()
+        val requestRegisterUser = createRequestRegisterUser(
+            name = faker.name.name(),
+            email = faker.internet.email(),
+            cpf = faker.random.randomString(11)
+        )
 
         val response = template.postForEntity(ENDPOINT_BANK_USER_REGISTER, requestRegisterUser, BankUser::class.java)
 
@@ -62,10 +61,17 @@ class BankUserControllerTest {
 
     @Test
     fun shouldLoginSuccessfully() {
-        val requestRegisterUser = createRequestRegisterUser()
+        val requestRegisterUser = createRequestRegisterUser(
+            name = faker.name.name(),
+            email = faker.internet.email(),
+            cpf = faker.random.randomString(11)
+        )
+
         template.postForEntity(ENDPOINT_BANK_USER_REGISTER, requestRegisterUser, BankUser::class.java)
 
-        val loginRequest = createRequestLoginDTO()
+        val loginRequest = createRequestLoginDTO(
+            email = requestRegisterUser.email,
+        )
         val response = template.postForEntity(ENDPOINT_LOGIN, loginRequest, String::class.java)
 
         Assertions.assertTrue(response.statusCode.is2xxSuccessful)
