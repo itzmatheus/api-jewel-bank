@@ -1,12 +1,12 @@
 package com.jewelbank.api.controller.exceptions
 
+import jakarta.persistence.EntityNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import java.lang.IllegalStateException
 import java.util.stream.Collectors
 
 @ControllerAdvice
@@ -35,6 +35,16 @@ class ExceptionControllerAdvice {
         )
         logger.error(ex.message, ex)
         return ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler
+    fun handleEntityNotFoundException(ex: EntityNotFoundException): ResponseEntity<ErrorMessageModel> {
+        val errorMessage = ErrorMessageModel(
+            status = HttpStatus.NOT_FOUND.value(),
+            message = ex.message
+        )
+        logger.error(ex.message, ex)
+        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }
 
 }

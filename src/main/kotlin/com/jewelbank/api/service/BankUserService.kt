@@ -3,7 +3,7 @@ package com.jewelbank.api.service
 import com.jewelbank.api.dto.BankUserRegisterDTO
 import com.jewelbank.api.entity.BankUser
 import com.jewelbank.api.repository.BankUserRepository
-import com.jewelbank.api.service.exceptions.BankUserNotFoundException
+import com.jewelbank.api.service.exceptions.EntityNotFoundException
 import com.jewelbank.api.utils.extensions.toEntity
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -31,7 +31,7 @@ class BankUserService(
     fun findById(id: String): BankUser {
         val user = bankUserRepository.findById(id)
         if (user.isEmpty) {
-            throw BankUserNotFoundException("BankUser not found by id: $id")
+            throw EntityNotFoundException("BankUser not found by id: $id")
         }
         return user.get()
     }

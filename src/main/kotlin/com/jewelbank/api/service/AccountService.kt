@@ -2,6 +2,7 @@ package com.jewelbank.api.service
 
 import com.jewelbank.api.entity.Account
 import com.jewelbank.api.repository.AccountRepository
+import com.jewelbank.api.service.exceptions.EntityNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -42,6 +43,14 @@ class AccountService(
         logger.info("bank account created")
 
         return account
+    }
+
+    fun findAccountById(accountId: String): Account {
+        val account = accountRepository.findById(accountId)
+        if(account.isEmpty) {
+            throw EntityNotFoundException("Account not found by id: $accountId")
+        }
+        return account.get()
     }
 
 }
