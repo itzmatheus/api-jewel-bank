@@ -3,6 +3,7 @@ package com.jewelbank.api.service
 import com.jewelbank.api.entity.Account
 import com.jewelbank.api.repository.AccountRepository
 import com.jewelbank.api.service.exceptions.EntityNotFoundException
+import com.jewelbank.api.utils.generateAccountNumber
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -35,7 +36,7 @@ class AccountService(
             bankUser = user,
             bank = bank,
             agency = agency,
-            number = (1..99999999).random().toString()
+            number = generateAccountNumber()
         )
         
         logger.info("try create bank")
